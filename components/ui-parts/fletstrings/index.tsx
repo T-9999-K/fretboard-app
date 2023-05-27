@@ -15,7 +15,7 @@ const FletStringsStyle = styled.div`
 const FletStrings = (props:FletStringsProp) => {
     const { stringsNo } = props
     const flets = []
-    for (let i = 1; i <= FletCout; i++) {
+    for (let i = 0; i <= FletCout; i++) {
         flets.push(<Flet stringsNo={stringsNo} fletNo={i} />)
     }
 
