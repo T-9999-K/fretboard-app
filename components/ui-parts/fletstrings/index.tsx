@@ -16,7 +16,7 @@ const FletStrings = (props:FletStringsProp) => {
     const { stringsNo } = props
     const flets = []
     for (let i = 0; i <= FletCout; i++) {
-        flets.push(<Flet stringsNo={stringsNo} fletNo={i} />)
+        flets.push(<Flet stringsNo={stringsNo} fletNo={i} key={i}/>)
     }
 
     console.log("FletStrings display!!")

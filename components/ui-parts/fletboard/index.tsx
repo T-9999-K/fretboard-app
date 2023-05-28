@@ -8,7 +8,7 @@ const StringsCount = 6;
 const FletBoard = () => {
     const fletStringsList = []
     for (let i = 1; i <= StringsCount; i++) {
-        fletStringsList.push(<FletStrings stringsNo={i} />)
+        fletStringsList.push(<FletStrings stringsNo={i} key={i} />)
     }
 
     console.log("FletBoard display!!")
