@@ -57,29 +57,10 @@ const Flet = (props: FletProps) => {
   const { pressFlets, setPressFlets } = useContext(PressFletMarksContext)
   const onClick = () => {
     setPressed(!pressed)
-    console.log(`${fletNo}flet ${stringsNo}strings pressed!!`)
+    console.log(`${stringsNo}strings ${fletNo}fletpressed!!`)
 
-    if (!pressed) {
-      pressFlets.push({
-        fletNo: fletNo,
-        stringsNo: stringsNo,
-      })
-    } else {
-      let removeIdx: number | null = null
-      for (let i = 0; i < pressFlets.length; i++) {
-        if (
-          pressFlets[i].fletNo == fletNo &&
-          pressFlets[i].stringsNo == stringsNo
-        ) {
-          removeIdx = i
-          break
-        }
-      }
-
-      if (removeIdx) {
-        pressFlets.splice(removeIdx, 1)
-      }
-    }
+    pressFlets[stringsNo] = !pressed ? fletNo : OpenFlet
+    console.log(pressFlets)
     setPressFlets(pressFlets)
   }
 
