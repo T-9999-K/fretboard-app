@@ -1,8 +1,8 @@
-import PressMark  from '../components/ui-parts/pressMark'
+import PressMark from '../components/ui-parts/pressMark'
 
 export default {
-    title: 'Label',
-    component: PressMark,
-};
+  title: 'Label',
+  component: PressMark,
+}
 
-export const TextElement = () => "test";
+export const TextElement = () => 'test'

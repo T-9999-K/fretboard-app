@@ -1,17 +1,17 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import FletStrings from '../components/ui-parts/fletstrings';
+import type { Meta, StoryObj } from '@storybook/react'
+import FletStrings from '../components/ui-parts/fletstrings'
 
 const meta: Meta<typeof FletStrings> = {
   title: 'Example/UI-Parts',
   component: FletStrings,
   tags: ['autodocs'],
-};
+}
 
-export default meta;
-type Story = StoryObj<typeof FletStrings>;
+export default meta
+type Story = StoryObj<typeof FletStrings>
 
 export const FletStringsPerOne: Story = {
   args: {
-    stringsNo: 1
+    stringsNo: 1,
   },
-};
+}
