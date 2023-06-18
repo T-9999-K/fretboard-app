@@ -3,7 +3,11 @@ import AnswerArea from 'components/ui-parts/answerArea'
 import { useContext } from 'react'
 import { QuizContext } from 'components/context/QuizContext'
 import { PressFletMarksContext } from 'components/context/PressFletMarksContext'
-import { InitAnswerResult, checkAnswer } from 'components/models/AnswerResult'
+import {
+  type AnswerResult,
+  InitAnswerResult,
+  checkAnswer
+} from 'components/models/AnswerResult'
 import { type ChordComposite } from 'components/models/ChordComposite'
 import QuizText from 'components/ui-parts/quizText'
 import { COMPOSITE_MODE } from 'components/const/const'
@@ -30,6 +34,10 @@ const Question: React.FC<QuestionProps> = (props) => {
 
   // 回答ボタン押下
   const answerClick = (): void => {
+    let correctNum = answerResult.correctNum
+    let inCorrectNum = answerResult.inCorrectNum
+    const nowQuestionNo = answerResult.Now
+    const answers = answerResult.Answer
     const answer: ChordComposite = {
       ChordName: {
         base: '',
@@ -39,9 +47,29 @@ const Question: React.FC<QuestionProps> = (props) => {
       Mode: COMPOSITE_MODE
     }
 
-    if (checkAnswer(chordComposite, answer)) {
-      console.log('正解')
+    if (answerResult.Answer.length === 0) {
+      answers.push(answer)
+    } else {
+      answers[nowQuestionNo] = answer
     }
+
+    if (checkAnswer(chordComposite, answer)) {
+      correctNum++
+      console.log('正解')
+    } else {
+      inCorrectNum++
+      console.log('不正解')
+    }
+
+    const answerClickResult: AnswerResult = {
+      correctNum,
+      inCorrectNum,
+      Quiz: result.Quiz,
+      Answer: answers,
+      Now: nowQuestionNo
+    }
+    console.log(answerClickResult)
+    setAnswerResult(answerClickResult)
   }
 
   // 前へボタン押下

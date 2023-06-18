@@ -61,8 +61,6 @@ const Flet: React.FC<FletProps> = (props) => {
     setPressFlets(pressFlets)
   }
 
-  console.log('Flet display!!')
-
   if (fletNo === OPEN_FLET_NUM) {
     return (
       <OPEN_FLET_NUM_BACK onClick={onClick}>

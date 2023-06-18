@@ -18,7 +18,6 @@ const FletStrings: React.FC<FletStringsProp> = (props) => {
   for (let i = min; i <= max; i++) {
     flets.push(<Flet stringsNo={stringsNo} fletNo={i} key={i} />)
   }
-  console.log('FletStrings display!!')
   return <FletStringsStyle>{flets}</FletStringsStyle>
 }
 
