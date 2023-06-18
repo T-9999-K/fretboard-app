@@ -4,7 +4,7 @@ import FletBoard from '../components/ui-parts/fletboard'
 const meta: Meta<typeof FletBoard> = {
   title: 'Example/UI-Parts',
   component: FletBoard,
-  tags: ['autodocs'],
+  tags: ['autodocs']
 }
 
 export default meta
@@ -12,6 +12,13 @@ type Story = StoryObj<typeof FletBoard>
 
 export const FletBoardStory: Story = {
   args: {
-    stringsNo: 1,
-  },
+    stringsFlets: {
+      1: 0,
+      2: 0,
+      3: 0,
+      4: 0,
+      5: 0,
+      6: 0
+    }
+  }
 }
