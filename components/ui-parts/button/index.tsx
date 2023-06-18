@@ -1,12 +1,17 @@
 import styled from 'styled-components'
-
+import { getBackGroundColor } from 'util/style/style'
 interface ButtonProps {
   text: string
+  buttonStyle: string
   onClick: () => void
 }
 
-const ButtonStyle = styled.button`
-  background-color: rgb(231, 76, 60);
+interface ButtonStyleProps {
+  styleType: string
+}
+
+const ButtonStyle = styled.button<ButtonStyleProps>`
+  ${(props) => getBackGroundColor(props.styleType)};
   color: white;
   padding: 0.5rem 0.8rem;
   border-radius: 0.2rem;
@@ -26,8 +31,12 @@ const ButtonStyle = styled.button`
 `
 
 const Button: React.FC<ButtonProps> = (props) => {
-  const { text, onClick } = props
-  return <ButtonStyle onClick={onClick}>{text}</ButtonStyle>
+  const { text, buttonStyle, onClick } = props
+  return (
+    <ButtonStyle styleType={buttonStyle} onClick={onClick}>
+      {text}
+    </ButtonStyle>
+  )
 }
 
 export default Button

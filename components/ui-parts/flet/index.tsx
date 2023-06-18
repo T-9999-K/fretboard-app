@@ -1,7 +1,7 @@
 import { useContext, useState } from 'react'
 import styled from 'styled-components'
 import PressMark from 'components/ui-parts/pressMark'
-import { PressFletMarksContext } from '../../context/PressFletMarksContext'
+import { PressFletMarksContext } from 'components/context/PressFletMarksContext'
 import {
   OPEN_FLET_NUM,
   FOURTH_STRING,

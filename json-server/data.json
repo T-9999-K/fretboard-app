@@ -1,35 +1,35 @@
 {
-    "quizList": [
+  "quizList": [
+    {
+      "mode": "composite",
+      "addSign": "",
+      "name": "C",
+      "composition": [
         {
-            "mode": "chord",
-            "addSign": "",
-            "name": "C",
-            "composition": [
-                {
-                    "strings": 1,
-                    "flet": 0
-                },
-                {
-                    "strings": 2,
-                    "flet": 1
-                },
-                {
-                    "strings": 3,
-                    "flet": 0
-                },
-                {
-                    "strings": 4,
-                    "flet": 2
-                },
-                {
-                    "strings": 5,
-                    "flet": 3
-                },
-                {
-                    "strings": 6,
-                    "flet": 0
-                }
-            ]
+          "strings": 1,
+          "flet": 0
+        },
+        {
+          "strings": 2,
+          "flet": 1
+        },
+        {
+          "strings": 3,
+          "flet": 0
+        },
+        {
+          "strings": 4,
+          "flet": 2
+        },
+        {
+          "strings": 5,
+          "flet": 3
+        },
+        {
+          "strings": 6,
+          "flet": 0
         }
-    ]
+      ]
+    }
+  ]
 }

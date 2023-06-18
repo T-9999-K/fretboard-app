@@ -1,8 +1,12 @@
-import Button from '../button'
+import Button from 'components/ui-parts/button'
 
-const AnswerButton: React.FC = () => {
-  const onClick = (): void => {}
-  return <Button text="回答" onClick={onClick} />
+interface AnswerButtonProps {
+  onClick: () => void
+}
+
+const AnswerButton: React.FC<AnswerButtonProps> = (props) => {
+  const { onClick } = props
+  return <Button text="回答" buttonStyle="danger" onClick={onClick} />
 }
 
 export default AnswerButton
