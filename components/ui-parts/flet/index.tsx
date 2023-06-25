@@ -13,31 +13,25 @@ interface FletProps {
   stringsNo: number
 }
 
-const OPEN_FLET_NUM_BACK = styled.div`
-  background-color: gray;
+const FletBack = styled.div<FletProps>`
+  position: relative;
   text-align: center;
   vertical-align: middle;
-  padding: 1rem 0.5rem;
-  position: relative;
-`
-const FletBack = styled.div`
-  background-color: black;
-  text-align: center;
-  width: 4rem;
-  height: 2rem;
-  vertical-align: middle;
-  border-right: 0.2rem solid gray;
-  position: relative;
-`
-
-const Strings = styled.span`
-  background: linear-gradient(#ffe298, #564101);
-  width: 4rem;
-  height: 0.3rem;
-  display: inline-block;
+  ${(props) =>
+    props.fletNo === OPEN_FLET_NUM
+      ? `
+      background-color: gray;
+      padding: 1rem 0.5rem;
+      `
+      : `
+      background-color: black;
+      width: 4rem;
+      height: 2rem;
+      border-right: 0.2rem solid gray;
+    `}
 `
 
-const CircleLabel = styled.span`
+const CircleLabel = styled.span<FletProps>`
   display: inline-block;
   width: 1.25rem;
   height: 1.25rem;
@@ -47,6 +41,18 @@ const CircleLabel = styled.span`
   top: -0.7rem;
   left: 1.4rem;
   opacity: 0.5;
+  ${(props) =>
+    props.stringsNo === FOURTH_STRING && MARKING_FLET_NUM.includes(props.fletNo)
+      ? ''
+      : 'visibility: hidden;'}
+`
+
+const Strings = styled.span<FletProps>`
+  background: linear-gradient(#ffe298, #564101);
+  width: 4rem;
+  height: 0.3rem;
+  display: ${(props) =>
+    props.fletNo === OPEN_FLET_NUM ? 'none;' : 'inline-block;'};
 `
 
 // フレット
@@ -61,27 +67,10 @@ const Flet: React.FC<FletProps> = (props) => {
     setPressFlets(pressFlets)
   }
 
-  if (fletNo === OPEN_FLET_NUM) {
-    return (
-      <OPEN_FLET_NUM_BACK onClick={onClick}>
-        <PressMark pressed={pressed} fletNo={fletNo} />
-      </OPEN_FLET_NUM_BACK>
-    )
-  }
-
-  if (stringsNo === FOURTH_STRING && MARKING_FLET_NUM.includes(fletNo)) {
-    return (
-      <FletBack onClick={onClick}>
-        <Strings />
-        <CircleLabel />
-        <PressMark pressed={pressed} fletNo={fletNo} />
-      </FletBack>
-    )
-  }
-
   return (
-    <FletBack onClick={onClick}>
-      <Strings />
+    <FletBack stringsNo={stringsNo} fletNo={fletNo} onClick={onClick}>
+      <Strings stringsNo={stringsNo} fletNo={fletNo} />
+      <CircleLabel stringsNo={stringsNo} fletNo={fletNo} />
       <PressMark pressed={pressed} fletNo={fletNo} />
     </FletBack>
   )

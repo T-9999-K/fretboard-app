@@ -75,11 +75,37 @@ const Question: React.FC<QuestionProps> = (props) => {
   // 前へボタン押下
   const prevClick = (): void => {
     console.log('prev')
+    if (answerResult.Now === 0) {
+      return
+    }
+
+    const answerPrevResult: AnswerResult = {
+      correctNum: answerResult.correctNum,
+      inCorrectNum: answerResult.inCorrectNum,
+      Quiz: answerResult.Quiz,
+      Answer: answerResult.Answer,
+      Now: answerResult.Now - 1
+    }
+    console.log(answerPrevResult)
+    setAnswerResult(answerPrevResult)
   }
 
   // 次へボタン押下
   const nextClick = (): void => {
     console.log('next')
+    if (answerResult.Now === answerResult.Quiz.length - 1) {
+      return
+    }
+
+    const answerNextResult: AnswerResult = {
+      correctNum: answerResult.correctNum,
+      inCorrectNum: answerResult.inCorrectNum,
+      Quiz: answerResult.Quiz,
+      Answer: answerResult.Answer,
+      Now: answerResult.Now + 1
+    }
+    console.log(answerNextResult)
+    setAnswerResult(answerNextResult)
   }
 
   return (

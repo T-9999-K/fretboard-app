@@ -5,7 +5,7 @@ interface PressMarkProps {
   pressed: boolean
 }
 
-const CircleOn = styled.span`
+const Circle = styled.span<PressMarkProps>`
   display: inline-block;
   width: 1.25rem;
   height: 1.25rem;
@@ -13,42 +13,16 @@ const CircleOn = styled.span`
   border-radius: 50%;
   position: absolute;
   top: 0.2rem;
-  left: 1.4rem;
+  ${(props) =>
+    props.fletNo === OPEN_FLET_NUM ? 'left: 0.2rem;' : 'left: 1.4rem;'}
   z-index: 1;
-`
-
-const OpenCircleOn = styled.span`
-  display: inline-block;
-  width: 1.25rem;
-  height: 1.25rem;
-  background-color: #d7d7d7;
-  border-radius: 50%;
-  position: absolute;
-  top: 0.2rem;
-  left: 0.2rem;
-  z-index: 1;
-`
-
-const CircleOff = styled.span`
-  display: inline-block;
-  width: 1.25rem;
-  height: 1.25rem;
-  background-color: #d7d7d7;
-  border-radius: 50%;
-  position: absolute;
-  top: 0.2rem;
-  left: 1.4rem;
-  visibility: hidden;
+  ${(props) => (props.pressed ? '' : 'visibility: hidden;')}
 `
 
 // 押弦したマーク
 const PressMark: React.FC<PressMarkProps> = (props) => {
   const { pressed, fletNo } = props
-  if (fletNo === OPEN_FLET_NUM) {
-    return <>{pressed ? <OpenCircleOn /> : <CircleOff />}</>
-  }
-
-  return <>{pressed ? <CircleOn /> : <CircleOff />}</>
+  return <Circle pressed={pressed} fletNo={fletNo} />
 }
 
 export default PressMark

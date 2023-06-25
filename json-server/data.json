@@ -30,6 +30,68 @@
           "flet": 0
         }
       ]
+    },
+    {
+      "mode": "chord",
+      "addSign": "#",
+      "name": "F",
+      "composition": [
+        {
+          "strings": 1,
+          "flet": 2
+        },
+        {
+          "strings": 2,
+          "flet": 2
+        },
+        {
+          "strings": 3,
+          "flet": 3
+        },
+        {
+          "strings": 4,
+          "flet": 4
+        },
+        {
+          "strings": 5,
+          "flet": 4
+        },
+        {
+          "strings": 6,
+          "flet": 2
+        }
+      ]
+    },
+    {
+      "mode": "composite",
+      "addSign": "#",
+      "name": "F",
+      "composition": [
+        {
+          "strings": 1,
+          "flet": 2
+        },
+        {
+          "strings": 2,
+          "flet": 2
+        },
+        {
+          "strings": 3,
+          "flet": 3
+        },
+        {
+          "strings": 4,
+          "flet": 4
+        },
+        {
+          "strings": 5,
+          "flet": 4
+        },
+        {
+          "strings": 6,
+          "flet": 2
+        }
+      ]
     }
   ]
 }
