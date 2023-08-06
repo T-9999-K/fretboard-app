@@ -1,39 +1,30 @@
-import FletBoard from 'components/ui-parts/fletboard'
-import AnswerArea from 'components/ui-parts/answerArea'
-import { useContext } from 'react'
+import FletBoard from 'components/ui-parts/FletBoard'
+import AnswerArea from 'components/ui-parts/AnswerArea'
+import { useCallback, useContext, useState } from 'react'
 import { QuizContext } from 'components/context/QuizContext'
 import { PressFletMarksContext } from 'components/context/PressFletMarksContext'
-import {
-  type AnswerResult,
-  InitAnswerResult,
-  checkAnswer
-} from 'components/models/AnswerResult'
+import { type AnswerResult, checkAnswer } from 'components/models/AnswerResult'
 import { type ChordComposite } from 'components/models/ChordComposite'
-import QuizText from 'components/ui-parts/quizText'
+import QuizText from 'components/ui-parts/QuizText'
 import { COMPOSITE_MODE } from 'components/const/const'
 interface QuestionProps {
   questionNo: number | 0
   chordComposites: ChordComposite[]
 }
-const Question: React.FC<QuestionProps> = (props) => {
+const QuestionArea: React.FC<QuestionProps> = (props) => {
   const { answerResult, setAnswerResult } = useContext(QuizContext)
   const { pressFlets } = useContext(PressFletMarksContext)
-  const { chordComposites } = props
 
-  let result = answerResult
-  if (answerResult.Quiz.length === 0) {
-    // 初回表示
-    result = InitAnswerResult(chordComposites)
-    setAnswerResult(result)
-  }
+  // クイズ
+  const { questionNo, chordComposites } = props
 
   // 出題対象のフレットボード
-  const questionNo = result.Now
-  const chordComposite = result.Quiz[questionNo]
-  const stringFlets = chordComposite.StringsFlets
+  const [stringsFlets, setStringsFlets] = useState(
+    chordComposites[questionNo].StringsFlets
+  )
 
   // 回答ボタン押下
-  const answerClick = (): void => {
+  const answerClick = useCallback((): void => {
     let correctNum = answerResult.correctNum
     let inCorrectNum = answerResult.inCorrectNum
     const nowQuestionNo = answerResult.Now
@@ -53,7 +44,7 @@ const Question: React.FC<QuestionProps> = (props) => {
       answers[nowQuestionNo] = answer
     }
 
-    if (checkAnswer(chordComposite, answer)) {
+    if (checkAnswer(chordComposites[questionNo], answer)) {
       correctNum++
       console.log('正解')
     } else {
@@ -64,16 +55,14 @@ const Question: React.FC<QuestionProps> = (props) => {
     const answerClickResult: AnswerResult = {
       correctNum,
       inCorrectNum,
-      Quiz: result.Quiz,
       Answer: answers,
       Now: nowQuestionNo
     }
-    console.log(answerClickResult)
     setAnswerResult(answerClickResult)
-  }
+  }, [answerResult])
 
   // 前へボタン押下
-  const prevClick = (): void => {
+  const prevClick = useCallback((): void => {
     console.log('prev')
     if (answerResult.Now === 0) {
       return
@@ -82,36 +71,37 @@ const Question: React.FC<QuestionProps> = (props) => {
     const answerPrevResult: AnswerResult = {
       correctNum: answerResult.correctNum,
       inCorrectNum: answerResult.inCorrectNum,
-      Quiz: answerResult.Quiz,
       Answer: answerResult.Answer,
       Now: answerResult.Now - 1
     }
-    console.log(answerPrevResult)
     setAnswerResult(answerPrevResult)
-  }
+    setStringsFlets(chordComposites[answerPrevResult.Now].StringsFlets)
+  }, [answerResult])
 
   // 次へボタン押下
-  const nextClick = (): void => {
+  const nextClick = useCallback((): void => {
     console.log('next')
-    if (answerResult.Now === answerResult.Quiz.length - 1) {
+    if (answerResult.Now === chordComposites.length - 1) {
       return
     }
 
     const answerNextResult: AnswerResult = {
       correctNum: answerResult.correctNum,
       inCorrectNum: answerResult.inCorrectNum,
-      Quiz: answerResult.Quiz,
       Answer: answerResult.Answer,
       Now: answerResult.Now + 1
     }
-    console.log(answerNextResult)
     setAnswerResult(answerNextResult)
-  }
+    setStringsFlets(chordComposites[answerNextResult.Now].StringsFlets)
+  }, [answerResult])
 
   return (
     <>
-      <QuizText questionNo={questionNo} chordComposite={chordComposite} />
-      <FletBoard stringsFlets={stringFlets} />
+      <QuizText
+        questionNo={questionNo}
+        chordComposite={chordComposites[questionNo]}
+      />
+      <FletBoard stringsFlets={stringsFlets} pressFlets={pressFlets} />
       <AnswerArea
         prevClick={prevClick}
         answerClick={answerClick}
@@ -121,4 +111,4 @@ const Question: React.FC<QuestionProps> = (props) => {
   )
 }
 
-export default Question
+export default QuestionArea

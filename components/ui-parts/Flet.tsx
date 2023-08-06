@@ -1,6 +1,6 @@
 import { useContext, useState } from 'react'
 import styled from 'styled-components'
-import PressMark from 'components/ui-parts/pressMark'
+import PressMark from 'components/ui-parts/PressMark'
 import { PressFletMarksContext } from 'components/context/PressFletMarksContext'
 import {
   OPEN_FLET_NUM,
@@ -11,9 +11,19 @@ import {
 interface FletProps {
   fletNo: number
   stringsNo: number
+  initPressed: boolean
 }
 
-const FletBack = styled.div<FletProps>`
+interface FletNoProp {
+  fletNo: number
+}
+
+interface CircleLabelProp {
+  fletNo: number
+  stringsNo: number
+}
+
+const FletBack = styled.div<FletNoProp>`
   position: relative;
   text-align: center;
   vertical-align: middle;
@@ -31,7 +41,7 @@ const FletBack = styled.div<FletProps>`
     `}
 `
 
-const CircleLabel = styled.span<FletProps>`
+const CircleLabel = styled.span<CircleLabelProp>`
   display: inline-block;
   width: 1.25rem;
   height: 1.25rem;
@@ -47,7 +57,7 @@ const CircleLabel = styled.span<FletProps>`
       : 'visibility: hidden;'}
 `
 
-const Strings = styled.span<FletProps>`
+const Strings = styled.span<FletNoProp>`
   background: linear-gradient(#ffe298, #564101);
   width: 4rem;
   height: 0.3rem;
@@ -57,21 +67,24 @@ const Strings = styled.span<FletProps>`
 
 // フレット
 const Flet: React.FC<FletProps> = (props) => {
-  const { fletNo, stringsNo } = props
-  const [pressed, setPressed] = useState(false)
+  const { fletNo, stringsNo, initPressed } = props
   const { pressFlets, setPressFlets } = useContext(PressFletMarksContext)
-  const onClick = (): void => {
-    setPressed(!pressed)
+  const [pressed, setPressed] = useState(initPressed)
 
-    pressFlets[stringsNo] = !pressed ? fletNo : OPEN_FLET_NUM
+  const onClick = (): void => {
+    const pressFletNo = pressFlets[stringsNo]
+    if (pressFletNo <= fletNo) {
+      pressFlets[stringsNo] = !initPressed ? fletNo : OPEN_FLET_NUM
+    }
     setPressFlets(pressFlets)
+    setPressed(!pressed)
   }
 
   return (
-    <FletBack stringsNo={stringsNo} fletNo={fletNo} onClick={onClick}>
-      <Strings stringsNo={stringsNo} fletNo={fletNo} />
-      <CircleLabel stringsNo={stringsNo} fletNo={fletNo} />
-      <PressMark pressed={pressed} fletNo={fletNo} />
+    <FletBack onClick={onClick} fletNo={fletNo}>
+      <Strings fletNo={fletNo} />
+      <CircleLabel fletNo={fletNo} stringsNo={stringsNo} />
+      <PressMark pressed={initPressed} fletNo={fletNo} />
     </FletBack>
   )
 }

@@ -1,6 +1,6 @@
 import styled from 'styled-components'
-import AnswerButton from 'components/ui-parts/answerButton'
-import MoveButton from 'components/ui-parts/moveButton'
+import AnswerButton from 'components/ui-parts/AnswerButton'
+import MoveButton from 'components/ui-parts/MoveButton'
 
 interface AnswerAreaProp {
   prevClick: () => void

@@ -10,7 +10,6 @@ interface QuizContextType {
 const initAnswerResult: AnswerResult = {
   correctNum: 0,
   inCorrectNum: 0,
-  Quiz: [],
   Answer: [],
   Now: 0
 }

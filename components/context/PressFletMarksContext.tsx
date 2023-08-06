@@ -1,5 +1,6 @@
 import { createContext, useState } from 'react'
 import { type StringsFlets } from 'components/models/StringsFlets'
+import { STRING_COUNT, OPEN_FLET_NUM } from 'components/const/const'
 interface PressFletContextType {
   pressFlets: StringsFlets
   setPressFlets: (pressFlets: Record<number, number>) => void
@@ -17,7 +18,7 @@ const defaultFlets: StringsFlets = {
 
 // contextの作成
 export const PressFletMarksContext = createContext<PressFletContextType>({
-  pressFlets: [],
+  pressFlets: {},
   setPressFlets: (pressFlets: StringsFlets) => {}
 })
 
@@ -33,4 +34,14 @@ export const PressFletMarksProvider: React.FC<{
       {children}
     </PressFletMarksContext.Provider>
   )
+}
+
+export const initStringsFlets = (): StringsFlets => {
+  const stringsFlets: StringsFlets = {}
+  for (let i = 1; i <= STRING_COUNT; i++) {
+    if (stringsFlets[i] !== undefined) {
+      stringsFlets[i] = OPEN_FLET_NUM
+    }
+  }
+  return stringsFlets
 }

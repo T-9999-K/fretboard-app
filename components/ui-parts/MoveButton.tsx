@@ -1,4 +1,4 @@
-import Button from 'components/ui-parts/button'
+import Button from 'components/ui-parts/Button'
 
 interface MoveButtonProps {
   text: string

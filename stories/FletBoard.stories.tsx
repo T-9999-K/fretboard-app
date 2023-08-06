@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import FletBoard from '../components/ui-parts/fletboard'
+import FletBoard from '../components/ui-parts/FletBoard'
 
 const meta: Meta<typeof FletBoard> = {
   title: 'Example/UI-Parts',

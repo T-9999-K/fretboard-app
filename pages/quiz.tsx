@@ -4,7 +4,7 @@ import { PressFletMarksProvider } from '../components/context/PressFletMarksCont
 import { QuizProvider } from 'components/context/QuizContext'
 import { type GetServerSideProps, type NextPage } from 'next'
 import { type ChordComposite } from 'components/models/ChordComposite'
-import Question from 'components/ui-parts/question'
+import QuestionArea from 'components/ui-parts/QuestionArea'
 import { getQuiz } from 'services/getQuiz'
 
 interface SSRProps {
@@ -19,7 +19,7 @@ const Quiz: NextPage<SSRProps> = (props) => {
     <>
       <QuizProvider>
         <PressFletMarksProvider>
-          <Question
+          <QuestionArea
             questionNo={initQuestionNo}
             chordComposites={chordComposites}
           />

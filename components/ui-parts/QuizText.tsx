@@ -1,4 +1,4 @@
-import TextLabel from 'components/ui-parts/textLabel'
+import TextLabel from 'components/ui-parts/TextLabel'
 import {
   type ChordComposite,
   getQuizText

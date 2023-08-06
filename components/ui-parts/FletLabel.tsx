@@ -26,7 +26,11 @@ const FletLabel: React.FC<FletLabelProp> = (props) => {
   const { min, max } = props
   const flets: JSX.Element[] = []
   for (let i = min; i <= max; i++) {
-    flets.push(<Label fletNo={i}>{i !== OPEN_FLET_NUM ? i : ''}</Label>)
+    flets.push(
+      <Label key={i} fletNo={i}>
+        {i !== OPEN_FLET_NUM ? i : ''}
+      </Label>
+    )
   }
   return <FletStringsStyle>{flets}</FletStringsStyle>
 }
