@@ -6,12 +6,8 @@ interface ButtonProps {
   onClick: () => void
 }
 
-interface ButtonStyleProps {
-  styleType: string
-}
-
-const ButtonStyle = styled.button<ButtonStyleProps>`
-  ${(props) => getBackGroundColor(props.styleType)};
+const ButtonStyle = styled.button<{ $styleType }>`
+  ${(props) => getBackGroundColor(props.$styleType)};
   color: white;
   padding: 0.5rem 0.8rem;
   border-radius: 0.2rem;
@@ -33,7 +29,7 @@ const ButtonStyle = styled.button<ButtonStyleProps>`
 const Button: React.FC<ButtonProps> = (props) => {
   const { text, buttonStyle, onClick } = props
   return (
-    <ButtonStyle styleType={buttonStyle} onClick={onClick}>
+    <ButtonStyle $styleType={buttonStyle} onClick={onClick}>
       {text}
     </ButtonStyle>
   )

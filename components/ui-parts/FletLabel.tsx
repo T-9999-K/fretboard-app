@@ -6,17 +6,14 @@ interface FletLabelProp {
   max: number
 }
 
-interface FletProps {
-  fletNo: number
-}
 const FletStringsStyle = styled.div`
   display: flex;
 `
 
-const Label = styled.div<FletProps>`
+const Label = styled.div<{ $fletNo }>`
   text-align: center;
   ${(props) =>
-    props.fletNo === OPEN_FLET_NUM
+    props.$fletNo === OPEN_FLET_NUM
       ? ' padding: 1rem 0.5rem;'
       : ' width: 4.2rem;'}
 `
@@ -27,7 +24,7 @@ const FletLabel: React.FC<FletLabelProp> = (props) => {
   const flets: JSX.Element[] = []
   for (let i = min; i <= max; i++) {
     flets.push(
-      <Label key={i} fletNo={i}>
+      <Label key={i} $fletNo={i}>
         {i !== OPEN_FLET_NUM ? i : ''}
       </Label>
     )
