@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import PressMark from 'components/ui-parts/PressMark'
 import { PressFletMarksContext } from 'components/context/PressFletMarksContext'
@@ -66,15 +66,15 @@ const Flet: React.FC<FletProps> = (props) => {
   const { pressFlets, setPressFlets } = useContext(PressFletMarksContext)
   const [pressed, setPressed] = useState(initPressed)
 
-  const onClick = (): void => {
+  const onClick = useCallback((): void => {
     const pressFletNo =
       typeof pressFlets === 'undefined' ? 0 : pressFlets[stringsNo]
     if (pressFletNo <= fletNo) {
       pressFlets[stringsNo] = !initPressed ? fletNo : OPEN_FLET_NUM
     }
     setPressFlets(pressFlets)
-    setPressed(!initPressed)
-  }
+    setPressed(!pressed)
+  }, [pressed])
 
   useEffect(() => {
     const pressFletNo =
