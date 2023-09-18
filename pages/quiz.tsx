@@ -11,18 +11,13 @@ interface SSRProps {
   chordComposites: ChordComposite[]
 }
 
-const initQuestionNo = 0
-
 const Quiz: NextPage<SSRProps> = (props) => {
   const { chordComposites } = props
   return (
     <>
       <QuizProvider>
         <PressFletMarksProvider>
-          <QuestionArea
-            questionNo={initQuestionNo}
-            chordComposites={chordComposites}
-          />
+          <QuestionArea chordComposites={chordComposites} />
         </PressFletMarksProvider>
       </QuizProvider>
     </>
