@@ -6,7 +6,11 @@ import {
   GetMaxFlet,
   GetMinFlet
 } from 'components/models/StringsFlets'
+import styled from 'styled-components'
 
+const FletBoardStyle = styled.div`
+  width: 100%;
+`
 interface FletBoardProps {
   stringsFlets: StringsFlets
   mode: string
@@ -38,7 +42,7 @@ const FletBoard: React.FC<FletBoardProps> = (props) => {
       )
     }
   }
-  return <>{fletStringsList}</>
+  return <FletBoardStyle>{fletStringsList}</FletBoardStyle>
 }
 
 export default FletBoard

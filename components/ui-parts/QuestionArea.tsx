@@ -11,6 +11,7 @@ import styled from 'styled-components'
 import AnswerButton from 'components/ui-parts/AnswerButton'
 import MoveButton from 'components/ui-parts/MoveButton'
 import { initStringsFlets } from './../context/PressFletMarksContext'
+import SelectList from './SelectList'
 
 const AnswerAreaStyle = styled.div`
   display: flex;
@@ -33,6 +34,9 @@ const QuestionArea: React.FC<QuestionProps> = (props) => {
   const [stringsFlets, setStringsFlets] = useState(
     chordComposites[questionNo].StringsFlets
   ) // 出題対象のフレットボード
+  const isChordMode = CHORD_MODE === chordComposites[questionNo].Mode
+  //  const [baseChord, setBaseChord] = useState('')
+  //  const [addSign, setAddSign] = useState('')
 
   console.log('===== QuestionArea =====')
   console.log('questionNo:', questionNo)
@@ -129,6 +133,12 @@ const QuestionArea: React.FC<QuestionProps> = (props) => {
         mode={chordComposites[questionNo].Mode}
         questionNo={questionNo}
       />
+      {isChordMode && (
+        <>
+          <SelectList label={'baseChord'} />
+          <SelectList label={'addSign'} />
+        </>
+      )}
       <AnswerAreaStyle>
         <ButtonArea>
           {questionNo > 0 && <MoveButton text={'前へ'} onClick={prevClick} />}

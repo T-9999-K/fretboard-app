@@ -6,6 +6,8 @@ import { type GetServerSideProps, type NextPage } from 'next'
 import { type ChordComposite } from 'components/models/ChordComposite'
 import QuestionArea from 'components/ui-parts/QuestionArea'
 import { getQuiz } from 'services/getQuiz'
+import AppHeader from 'components/ui-parts/AppHeader'
+import AppContent from 'components/ui-parts/AppContent'
 
 interface SSRProps {
   chordComposites: ChordComposite[]
@@ -17,7 +19,10 @@ const Quiz: NextPage<SSRProps> = (props) => {
     <>
       <QuizProvider>
         <PressFletMarksProvider>
-          <QuestionArea chordComposites={chordComposites} />
+          <AppHeader />
+          <AppContent>
+            <QuestionArea chordComposites={chordComposites} />
+          </AppContent>
         </PressFletMarksProvider>
       </QuizProvider>
     </>

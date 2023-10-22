@@ -1,4 +1,4 @@
-import { FIRST_FLET } from 'components/const/const'
+import { FIRST_FLET, FLET_SIZE_MODE, FLET_COUNT } from 'components/const/const'
 
 // 弦とフレットの組み合わせ
 export type StringsFlets = Record<number, number | 0>
@@ -14,6 +14,7 @@ export const defaultFlets: StringsFlets = {
 }
 
 export const GetMaxFlet = (stringsFlets: StringsFlets): number => {
+  if (FLET_SIZE_MODE === 'pc') return FLET_COUNT + 1
   let max = 0
   for (const key of Object.keys(stringsFlets)) {
     if (max < stringsFlets[key]) {
@@ -24,6 +25,7 @@ export const GetMaxFlet = (stringsFlets: StringsFlets): number => {
 }
 
 export const GetMinFlet = (stringsFlets: StringsFlets): number => {
+  if (FLET_SIZE_MODE === 'pc') return 0
   let min = 0
   for (const key of Object.keys(stringsFlets)) {
     if (Number(key) < FIRST_FLET + 1) {
