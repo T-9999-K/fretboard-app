@@ -1,19 +1,23 @@
 import { useContext, useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import PressMark from 'components/ui-parts/PressMark'
-import { PressFletMarksContext } from 'components/context/PressFletMarksContext'
+import {
+  initStringsFlets,
+  PressFletMarksContext
+} from 'components/context/PressFletMarksContext'
 import {
   CHORD_MODE,
   OPEN_FLET_NUM,
   FOURTH_STRING,
   MARKING_FLET_NUM
 } from 'components/const/const'
+import { type StringsFlets } from 'components/models/StringsFlets'
 
 interface FletProps {
   fletNo: number
   stringsNo: number
-  initPressed: boolean
   mode: string
+  questionNo: number
 }
 
 const FletBack = styled.div<{ $fletNo }>`
@@ -64,27 +68,39 @@ const Strings = styled.span<{ $fletNo }>`
 
 // フレット
 const Flet: React.FC<FletProps> = (props) => {
-  const { fletNo, stringsNo, initPressed, mode } = props
+  const { fletNo, stringsNo, mode, questionNo } = props
   const { pressFlets, setPressFlets } = useContext(PressFletMarksContext)
-  const [pressed, setPressed] = useState(initPressed)
+  const [pressed, setPressed] = useState(false)
 
   const onClick = useCallback((): void => {
     if (mode === CHORD_MODE) return
-    const pressFletNo =
-      typeof pressFlets === 'undefined' ? 0 : pressFlets[stringsNo]
-    if (pressFletNo <= fletNo) {
-      pressFlets[stringsNo] = !initPressed ? fletNo : OPEN_FLET_NUM
+    const newPressFlets = [...pressFlets]
+    if (typeof newPressFlets[questionNo] === 'undefined') {
+      newPressFlets[questionNo] = initStringsFlets()
     }
-    setPressFlets(pressFlets)
+
+    const pressFletNo = newPressFlets[questionNo][stringsNo]
+    if (pressFletNo <= fletNo) {
+      newPressFlets[questionNo][stringsNo] = !pressed ? fletNo : OPEN_FLET_NUM
+    }
+    setPressFlets(newPressFlets)
     setPressed(!pressed)
-  }, [pressed, mode])
+  }, [pressed, pressFlets, mode, questionNo])
 
   useEffect(() => {
-    const pressFletNo =
-      typeof pressFlets === 'undefined' ? 0 : pressFlets[stringsNo]
+    const newPressFlets: StringsFlets[] = []
+    pressFlets.forEach((item, idx) => {
+      if (idx === questionNo && typeof item === 'undefined') {
+        newPressFlets[idx] = initStringsFlets()
+      } else {
+        newPressFlets[idx] = item
+      }
+    })
+
+    const pressFletNo = newPressFlets[questionNo][stringsNo]
     const pressed = pressFletNo === fletNo
     setPressed(pressed)
-  }, [pressFlets])
+  }, [pressFlets, mode, questionNo])
 
   return (
     <FletBack onClick={onClick} $fletNo={fletNo}>

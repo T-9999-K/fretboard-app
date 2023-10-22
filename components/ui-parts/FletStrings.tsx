@@ -5,8 +5,8 @@ interface FletStringsProp {
   stringsNo: number
   min: number
   max: number
-  pressedFlet: number | undefined
   mode: string
+  questionNo: number
 }
 
 const FletStringsStyle = styled.div`
@@ -15,17 +15,16 @@ const FletStringsStyle = styled.div`
 
 // 1弦あたりのフレット
 const FletStrings: React.FC<FletStringsProp> = (props) => {
-  const { stringsNo, min, max, pressedFlet, mode } = props
+  const { stringsNo, min, max, mode, questionNo } = props
   const flets: JSX.Element[] = []
   for (let i = min; i <= max; i++) {
-    const initPressed = i === pressedFlet
     flets.push(
       <Flet
         key={i}
         stringsNo={stringsNo}
         fletNo={i}
-        initPressed={initPressed}
         mode={mode}
+        questionNo={questionNo}
       />
     )
   }

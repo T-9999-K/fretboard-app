@@ -9,13 +9,13 @@ import {
 
 interface FletBoardProps {
   stringsFlets: StringsFlets
-  pressFlets: StringsFlets
   mode: string
+  questionNo: number
 }
 
 // フレットボード
 const FletBoard: React.FC<FletBoardProps> = (props) => {
-  const { stringsFlets, pressFlets, mode } = props
+  const { stringsFlets, mode, questionNo } = props
   const fletStringsList: JSX.Element[] = []
   for (let i = FIRST_FLET; i <= STRING_COUNT; i++) {
     fletStringsList.push(
@@ -24,8 +24,8 @@ const FletBoard: React.FC<FletBoardProps> = (props) => {
         key={i}
         min={GetMinFlet(stringsFlets)}
         max={GetMaxFlet(stringsFlets)}
-        pressedFlet={pressFlets[i]}
         mode={mode}
+        questionNo={questionNo}
       />
     )
     if (i === STRING_COUNT) {

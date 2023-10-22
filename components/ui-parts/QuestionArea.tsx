@@ -10,6 +10,7 @@ import { defaultFlets } from 'components/models/StringsFlets'
 import styled from 'styled-components'
 import AnswerButton from 'components/ui-parts/AnswerButton'
 import MoveButton from 'components/ui-parts/MoveButton'
+import { initStringsFlets } from './../context/PressFletMarksContext'
 
 const AnswerAreaStyle = styled.div`
   display: flex;
@@ -52,7 +53,7 @@ const QuestionArea: React.FC<QuestionProps> = (props) => {
         base: '',
         addSign: ''
       },
-      StringsFlets: pressFlets,
+      StringsFlets: pressFlets[nowQuestionNo],
       Mode: COMPOSITE_MODE
     }
 
@@ -83,7 +84,6 @@ const QuestionArea: React.FC<QuestionProps> = (props) => {
   const prevClick = useCallback((): void => {
     const prevQuestionNo = answerResult.Now - 1
     const prevStringsFlets = chordComposites[prevQuestionNo].StringsFlets
-    const isChordMode = CHORD_MODE === chordComposites[prevQuestionNo].Mode
     const answerPrevResult: AnswerResult = {
       correctNum: answerResult.correctNum,
       inCorrectNum: answerResult.inCorrectNum,
@@ -93,20 +93,12 @@ const QuestionArea: React.FC<QuestionProps> = (props) => {
     setAnswerResult(answerPrevResult)
     setQuestionNo(prevQuestionNo)
     setStringsFlets(prevStringsFlets)
-
-    const prevPressedFlets =
-      typeof answerResult.Answer[prevQuestionNo] === 'undefined'
-        ? defaultFlets
-        : answerResult.Answer[prevQuestionNo].StringsFlets
-    const targetFlets = isChordMode ? prevStringsFlets : prevPressedFlets
-    setPressFlets(targetFlets)
   }, [answerResult])
 
   // 次へボタン押下
   const nextClick = useCallback((): void => {
     const nextQuestionNo = answerResult.Now + 1
     const nextStringsFlets = chordComposites[nextQuestionNo].StringsFlets
-    const isChordMode = CHORD_MODE === chordComposites[nextQuestionNo].Mode
     const answerNextResult: AnswerResult = {
       correctNum: answerResult.correctNum,
       inCorrectNum: answerResult.inCorrectNum,
@@ -117,12 +109,13 @@ const QuestionArea: React.FC<QuestionProps> = (props) => {
     setQuestionNo(nextQuestionNo)
     setStringsFlets(nextStringsFlets)
 
-    const nextPressedFlets =
-      typeof answerResult.Answer[nextQuestionNo] === 'undefined'
-        ? defaultFlets
-        : answerResult.Answer[nextQuestionNo].StringsFlets
-    const targetFlets = isChordMode ? nextStringsFlets : nextPressedFlets
-    setPressFlets(targetFlets)
+    const isNextChordMode = CHORD_MODE === chordComposites[nextQuestionNo].Mode
+    const newPressFlets = [...pressFlets]
+    const targetFlets = isNextChordMode ? nextStringsFlets : initStringsFlets()
+    if (typeof newPressFlets[nextQuestionNo] === 'undefined') {
+      newPressFlets[nextQuestionNo] = targetFlets
+    }
+    setPressFlets(newPressFlets)
   }, [answerResult])
 
   return (
@@ -133,8 +126,8 @@ const QuestionArea: React.FC<QuestionProps> = (props) => {
       />
       <FletBoard
         stringsFlets={stringsFlets}
-        pressFlets={pressFlets}
         mode={chordComposites[questionNo].Mode}
+        questionNo={questionNo}
       />
       <AnswerAreaStyle>
         <ButtonArea>
