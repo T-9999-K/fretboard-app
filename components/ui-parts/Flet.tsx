@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import PressMark from 'components/ui-parts/PressMark'
 import { PressFletMarksContext } from 'components/context/PressFletMarksContext'
 import {
+  CHORD_MODE,
   OPEN_FLET_NUM,
   FOURTH_STRING,
   MARKING_FLET_NUM
@@ -12,6 +13,7 @@ interface FletProps {
   fletNo: number
   stringsNo: number
   initPressed: boolean
+  mode: string
 }
 
 const FletBack = styled.div<{ $fletNo }>`
@@ -62,11 +64,12 @@ const Strings = styled.span<{ $fletNo }>`
 
 // フレット
 const Flet: React.FC<FletProps> = (props) => {
-  const { fletNo, stringsNo, initPressed } = props
+  const { fletNo, stringsNo, initPressed, mode } = props
   const { pressFlets, setPressFlets } = useContext(PressFletMarksContext)
   const [pressed, setPressed] = useState(initPressed)
 
   const onClick = useCallback((): void => {
+    if (mode === CHORD_MODE) return
     const pressFletNo =
       typeof pressFlets === 'undefined' ? 0 : pressFlets[stringsNo]
     if (pressFletNo <= fletNo) {
@@ -74,7 +77,7 @@ const Flet: React.FC<FletProps> = (props) => {
     }
     setPressFlets(pressFlets)
     setPressed(!pressed)
-  }, [pressed])
+  }, [pressed, mode])
 
   useEffect(() => {
     const pressFletNo =

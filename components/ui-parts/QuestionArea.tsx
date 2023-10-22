@@ -131,7 +131,11 @@ const QuestionArea: React.FC<QuestionProps> = (props) => {
         questionNo={questionNo}
         chordComposite={chordComposites[questionNo]}
       />
-      <FletBoard stringsFlets={stringsFlets} pressFlets={pressFlets} />
+      <FletBoard
+        stringsFlets={stringsFlets}
+        pressFlets={pressFlets}
+        mode={chordComposites[questionNo].Mode}
+      />
       <AnswerAreaStyle>
         <ButtonArea>
           {questionNo > 0 && <MoveButton text={'前へ'} onClick={prevClick} />}
